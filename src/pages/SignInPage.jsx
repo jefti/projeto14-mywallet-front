@@ -1,21 +1,63 @@
-import styled from "styled-components"
-import { Link, useNavigate } from "react-router-dom"
-import MyWalletLogo from "../components/MyWalletLogo"
+import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
+import MyWalletLogo from "../components/MyWalletLogo";
+import apiAuth from "../services/apiAuth";
+import { useState } from "react";
+
 
 export default function SignInPage() {
   const navigate = useNavigate();
+  const [form, setForm] = useState({ email:"" ,password:"" });
+  
+  function handleForm(e){
+    if(e.target.name === "email"){
+      setForm({email: e.target.value, password: form.password,});
+    } else {
+      setForm({email: form.email, password: e.target.value.toString()});
+    }
+
+  }
+  
   function handleLogin(e){
     e.preventDefault();
-    navigate("/home"); 
+    console.log(form);
+    console.log(apiAuth);
+    apiAuth.login(form)
+      .then((res)=>{
+
+        console.log(res.data);
+        navigate("/home")
+      })
+      .catch((err)=>{
+        console.log(err.response.data.message);
+      });
   }
 
   return (
     <SingInContainer>
       <form onSubmit={handleLogin}>
         <MyWalletLogo />
-        <input placeholder="E-mail" type="email" />
-        <input placeholder="Senha" type="password" autocomplete="new-password" />
-        <button>Entrar</button>
+
+        <input
+          name="email"
+          type="email" 
+          placeholder="E-mail" 
+          required
+          value= {form.email}
+          onChange={handleForm}
+        />
+
+        <input
+          name="password"
+          type="password" 
+          placeholder="Senha"  
+          required
+          autocomplete="new-password"
+          value={form.password}
+          onChange={handleForm}
+        />
+
+        <button type="submit" >Entrar</button>
       </form>
 
       <Link to="/cadastro">
