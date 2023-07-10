@@ -20,8 +20,6 @@ export default function SignInPage() {
   
   function handleLogin(e){
     e.preventDefault();
-    console.log(form);
-    console.log(apiAuth);
     apiAuth.login(form)
       .then((res)=>{
 
@@ -29,7 +27,7 @@ export default function SignInPage() {
         navigate("/home")
       })
       .catch((err)=>{
-        console.log(err.response.data.message);
+        alert(err.response.data.message);
       });
   }
 
