@@ -36,6 +36,7 @@ export default function HomePage() {
   function handleLogout(){
     apiAuth.logout(user.token)
       .then((res)=>{
+        localStorage.removeItem("user");
         console.log(res);
         navigate("/")
       })
