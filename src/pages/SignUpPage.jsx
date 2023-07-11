@@ -57,7 +57,8 @@ export default function SignUpPage() {
           type="text"
           required
           value= {form.name}
-          onChange={handleForm} 
+          onChange={handleForm}
+          data-test="name" 
         />
         <input 
           name="email"
@@ -66,6 +67,7 @@ export default function SignUpPage() {
           required
           value= {form.email}
           onChange={handleForm}
+          data-test="email"
         />
         <input
           name="password" 
@@ -74,7 +76,8 @@ export default function SignUpPage() {
           autocomplete="new-password"
           required
           value= {form.password}
-          onChange={handleForm} 
+          onChange={handleForm}
+          data-test="password" 
         />
         <input
           name="confirmpassword"  
@@ -83,10 +86,11 @@ export default function SignUpPage() {
           autocomplete="new-password"
           required
           value= {form.confirmpassword}
-          onChange={handleForm} 
+          onChange={handleForm}
+          data-test="conf-password" 
         />
 
-        <button>Cadastrar</button>
+        <button data-test="sign-up-submit">Cadastrar</button>
       </form>
 
       <Link to="/">

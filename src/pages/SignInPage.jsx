@@ -2,11 +2,13 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import MyWalletLogo from "../components/MyWalletLogo";
 import apiAuth from "../services/apiAuth";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../contexts/UserContext";
 
 
 export default function SignInPage() {
   const navigate = useNavigate();
+  const {setUser} = useContext(UserContext);
   const [form, setForm] = useState({ email:"" ,password:"" });
   
   function handleForm(e){
@@ -22,8 +24,10 @@ export default function SignInPage() {
     e.preventDefault();
     apiAuth.login(form)
       .then((res)=>{
-
-        console.log(res.data);
+        const {name, email, token} = res.data;
+        setUser({name, email, token});
+        console.log({name, email, token});
+        localStorage.setItem("user", JSON.stringify({name, email, token}));
         navigate("/home")
       })
       .catch((err)=>{
@@ -43,6 +47,7 @@ export default function SignInPage() {
           required
           value= {form.email}
           onChange={handleForm}
+          data-test="email"
         />
 
         <input
@@ -53,9 +58,10 @@ export default function SignInPage() {
           autocomplete="new-password"
           value={form.password}
           onChange={handleForm}
+          data-test="password"
         />
 
-        <button type="submit" >Entrar</button>
+        <button type="submit" data-test="sign-in-submit">Entrar</button>
       </form>
 
       <Link to="/cadastro">
