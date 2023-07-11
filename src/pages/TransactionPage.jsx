@@ -9,7 +9,7 @@ export default function TransactionsPage() {
   const navigate = useNavigate();
   const {user} = useContext(UserContext);
 
-  const [form, setForm] = useState({ description:"", value:0 });
+  const [form, setForm] = useState({ description:"", value:'' });
   const {tipo} = useParams();
   function handleRegister(e){
     e.preventDefault();
@@ -53,6 +53,7 @@ export default function TransactionsPage() {
           onChange={handleForm}
           data-test="registry-amount-input"
         />
+        
         <input
           name="description" 
           placeholder="Descrição" 
