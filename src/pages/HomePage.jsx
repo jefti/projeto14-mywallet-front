@@ -28,8 +28,9 @@ export default function HomePage() {
         setSaldo(soma);
       })
       .catch((err) => {
+        
         console.log(err);
-        alert(err.response);
+        alert(err.response.data);
       })
   }
 
@@ -40,7 +41,7 @@ export default function HomePage() {
         console.log(res);
         navigate("/")
       })
-      .catch((err)=>{alert(err.response.data.message)});
+      .catch((err)=>{alert(err.response.data)});
   }
   function handleNavigate(destino){
     navigate(`/nova-transacao/${destino}`)
@@ -52,9 +53,9 @@ let lista = transactions.map(h =>(
   <ListItemContainer key={h._id}>
     <div>
       <span>{h.data}</span>
-      <strong>{h.description}</strong>
+      <strong data-test="registry-name">{h.description}</strong>
     </div>
-    <Value color={(h.type==="entrada")?"positivo":"negativo"}>{h.value.toFixed(2)}</Value>
+    <Value color={(h.type==="entrada")?"positivo":"negativo"} data-test="registry-amount">{h.value.toFixed(2).toString().replace('.',',')}</Value>
   </ListItemContainer>
 ));
 
@@ -63,7 +64,7 @@ let lista = transactions.map(h =>(
     <HomeContainer>
       <Header>
         <h1 data-test="user-name">Olá, {user.name}</h1>
-        <BiExit onClick={handleLogout}/>
+        <BiExit onClick={handleLogout} data-test="logout"/>
       </Header>
       <TransactionsContainer>
         <ul>
@@ -72,17 +73,17 @@ let lista = transactions.map(h =>(
 
         <article>
           <strong>Saldo</strong>
-          <Value color={(saldo>0)?"positivo":"negativo"}>{saldo.toFixed(2)}</Value>
+          <Value color={(saldo>0)?"positivo":"negativo"} data-test="total-amount">{saldo.toFixed(2).toString().replace('.',',')}</Value>
         </article>
       </TransactionsContainer>
 
 
       <ButtonsContainer >
-        <button onClick={()=> handleNavigate("entrada")}>
+        <button onClick={()=> handleNavigate("entrada")} data-test="new-income">
           <AiOutlinePlusCircle/>
           <p>Nova <br /> entrada</p>
         </button>
-        <button onClick={()=> handleNavigate("saida")}>
+        <button onClick={()=> handleNavigate("saida")} data-test="new-expense">
           <AiOutlineMinusCircle />
           <p>Nova <br />saída</p>
         </button>

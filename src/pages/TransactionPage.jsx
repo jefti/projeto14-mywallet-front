@@ -23,7 +23,7 @@ export default function TransactionsPage() {
         console.log(res.data);
         navigate("/home");
       })
-      .catch( err => alert(err.response));
+      .catch( err => alert(err.response.data));
   }
   
   function handleForm(e){
@@ -51,6 +51,7 @@ export default function TransactionsPage() {
           required
           value = {form.value}
           onChange={handleForm}
+          data-test="registry-amount-input"
         />
         <input
           name="description" 
@@ -59,9 +60,10 @@ export default function TransactionsPage() {
           value={form.description} 
           required
           onChange={handleForm}
+          data-test="registry-name-input"
         />
         
-        <button type="submit" >Salvar {tipo}</button>
+        <button type="submit" data-test="registry-save">Salvar {tipo}</button>
       </form>
     </TransactionsContainer>
   )
